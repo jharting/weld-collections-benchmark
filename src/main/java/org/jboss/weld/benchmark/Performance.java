@@ -24,7 +24,24 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 public class Performance {
 
     public static void main(String[] args) throws RunnerException {
-        Options opt = new OptionsBuilder().include("org.jboss.weld.benchmark").forks(1).build();
-        new Runner(opt).run();
+        String benchmark = System.getProperty("org.jboss.weld.benchmark");
+        if (benchmark == null) {
+            throw new IllegalArgumentException("You need to specify -Dorg.jboss.weld.benchmark");
+        }
+        switch (benchmark) {
+            case "cache": {
+                Options opt = new OptionsBuilder().include("org.jboss.weld.benchmark.cache").forks(1).threads(Runtime.getRuntime().availableProcessors())
+                        .build();
+                new Runner(opt).run();
+                return;
+            }
+            case "set": {
+                Options opt = new OptionsBuilder().include("org.jboss.weld.benchmark.set").forks(1).threads(1).build();
+                new Runner(opt).run();
+                return;
+            }
+            default: throw new IllegalArgumentException("Unknown benchmark: " + benchmark);
+        }
+
     }
 }

@@ -9,6 +9,7 @@
     <properties>
         <classmexer.location>${project.basedir}/ext/classmexer.jar</classmexer.location>
         <set.size>100</set.size>
+        <benchmark>set</benchmark>
     </properties>
 
     <dependencies>
@@ -114,6 +115,7 @@
                                 <argument>-classpath</argument>
                                 <classpath />
                                 <argument>-Dorg.jboss.weld.benchmark.setSize=${set.size}</argument>
+                                <argument>-Dorg.jboss.weld.benchmark=${benchmark}</argument>
                                 <argument>org.jboss.weld.benchmark.Performance</argument>
                             </arguments>
                         </configuration>
