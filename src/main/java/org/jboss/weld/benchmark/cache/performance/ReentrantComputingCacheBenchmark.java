@@ -19,11 +19,15 @@ package org.jboss.weld.benchmark.cache.performance;
 import org.jboss.weld.util.cache.ComputingCache;
 import org.jboss.weld.util.cache.ComputingCacheBuilder;
 
-public class ReentrantComputingCacheBenchmark extends AbstractCacheBenchmark<ComputingCache<Foo, Foo>> {
+public class ReentrantComputingCacheBenchmark extends
+        AbstractCacheBenchmark<ComputingCache<Foo, Foo>> {
 
     @Override
     protected ComputingCache<Foo, Foo> getCache() {
-        return ComputingCacheBuilder.newBuilder().setMaxSize(getMaxSize()).buildReentrant(key -> key);
+        return ComputingCacheBuilder.newBuilder().setMaxSize(getMaxSize())
+                .<Foo, Foo> buildReentrant((key) -> {
+                    return compute(key);
+                });
     }
 
     @Override

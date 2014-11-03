@@ -23,7 +23,10 @@ public class DefaultComputingCacheBenchmark extends AbstractCacheBenchmark<Compu
 
     @Override
     protected ComputingCache<Foo, Foo> getCache() {
-        return ComputingCacheBuilder.newBuilder().setMaxSize(getMaxSize()).build(key -> key);
+        return ComputingCacheBuilder.newBuilder().setMaxSize(getMaxSize())
+                .<Foo, Foo> build((key) -> {
+                    return compute(key);
+                });
     }
 
     @Override

@@ -25,10 +25,9 @@ public class GuavaCacheBenchmark extends AbstractCacheBenchmark<LoadingCache<Foo
     @Override
     protected LoadingCache<Foo, Foo> getCache() {
         return CacheBuilder.newBuilder().maximumSize(getMaxSize()).build(new CacheLoader<Foo, Foo>() {
-
             @Override
-            public Foo load(Foo arg0) throws Exception {
-                return arg0;
+            public Foo load(Foo key) throws Exception {
+                return compute(key);
             }
 
         });

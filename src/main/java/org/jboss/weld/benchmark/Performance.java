@@ -28,9 +28,12 @@ public class Performance {
         if (benchmark == null) {
             throw new IllegalArgumentException("You need to specify -Dorg.jboss.weld.benchmark");
         }
+
+        int numberOfThreads = Integer.getInteger("org.jboss.weld.threads", Runtime.getRuntime().availableProcessors());
+
         switch (benchmark) {
             case "cache": {
-                Options opt = new OptionsBuilder().include("org.jboss.weld.benchmark.cache").forks(1).threads(Runtime.getRuntime().availableProcessors())
+                Options opt = new OptionsBuilder().include("org.jboss.weld.benchmark.cache").forks(1).threads(numberOfThreads)
                         .build();
                 new Runner(opt).run();
                 return;
